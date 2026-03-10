@@ -23,6 +23,7 @@ class DllsExtractor(BaseExtractor):
     HEADERS = [
         "pid", "process_name", "module_name", "module_path",
         "base_address", "size", "entry_point",
+        "is_wow64", "module_type", "pe_timedatestamp", "pe_checksum",
     ]
 
     def extract(self, vmm: Any, out_dir: Path) -> ExtractResult:
@@ -38,7 +39,20 @@ class DllsExtractor(BaseExtractor):
                         base = hex(mod.base) if hasattr(mod, "base") else ""
                         size = str(mod.size) if hasattr(mod, "size") else ""
                         entry = hex(mod.entry) if hasattr(mod, "entry") else ""
-                        rows.append([pid, proc_name, mod_name, mod_path, base, size, entry])
+                        is_wow64 = str(bool(getattr(mod, "is_wow64", False)))
+                        module_type = str(getattr(mod, "tp_file", ""))
+                        try:
+                            pefile = getattr(mod, "pefile", None)
+                            pe_opt = getattr(pefile, "opt", None) if pefile is not None else None
+                            pe_ts = str(getattr(pe_opt, "timedatestamp", "")) if pe_opt is not None else ""
+                            pe_ck = str(getattr(pe_opt, "checksum", "")) if pe_opt is not None else ""
+                        except Exception:
+                            pe_ts = ""
+                            pe_ck = ""
+                        rows.append([
+                            pid, proc_name, mod_name, mod_path, base, size, entry,
+                            is_wow64, module_type, pe_ts, pe_ck,
+                        ])
                     except Exception as exc:
                         logger.debug("Skipping module in PID %s: %s", pid, exc)
             except Exception as exc:

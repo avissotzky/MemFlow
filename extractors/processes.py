@@ -17,11 +17,23 @@ class ProcessesExtractor(BaseExtractor):
     source = "api"
 
     HEADERS = [
-        "pid", "ppid", "name", "path", "user", "cmdline",
-        "state", "create_time", "exit_time",
+        "pid", "ppid", "pppid", "name", "parent_name", "grandparent_name",
+        "path", "user", "username", "cmdline",
+        "state", "create_time", "exit_time", "wow64",
     ]
 
     def extract(self, vmm: Any, out_dir: Path) -> ExtractResult:
+        # Build pid → (name, ppid) lookup for parent/grandparent resolution
+        pid_info: dict[str, tuple[str, str]] = {}
+        try:
+            for p in vmm.process_list():
+                try:
+                    pid_info[str(p.pid)] = (p.name or "", str(p.ppid))
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
         rows: list[list[str]] = []
         for proc in vmm.process_list():
             try:
@@ -37,20 +49,39 @@ class ProcessesExtractor(BaseExtractor):
                 except Exception:
                     user = ""
                 try:
+                    username = str(proc.username) if getattr(proc, "username", None) else ""
+                except Exception:
+                    username = ""
+                try:
                     cmdline = proc.cmdline or ""
                 except Exception:
                     cmdline = ""
-                state_val = "Running"
                 try:
-                    ti = proc.info
-                    create_time = str(ti.get("time-create", "")) if isinstance(ti, dict) else ""
-                    exit_time = str(ti.get("time-exit", "")) if isinstance(ti, dict) else ""
+                    state_val = str(getattr(proc, "state", ""))
+                except Exception:
+                    state_val = ""
+                try:
+                    create_time = str(proc.time_create) if getattr(proc, "time_create", None) else ""
                 except Exception:
                     create_time = ""
+                try:
+                    exit_time = str(proc.time_exit) if getattr(proc, "time_exit", None) else ""
+                except Exception:
                     exit_time = ""
+                try:
+                    wow64 = str(bool(getattr(proc, "wow64", False)))
+                except Exception:
+                    wow64 = ""
+                parent_name, pppid_val, grandparent_name = "", "", ""
+                if ppid in pid_info:
+                    parent_name, pppid_val = pid_info[ppid]
+                    if pppid_val in pid_info:
+                        grandparent_name = pid_info[pppid_val][0]
+
                 rows.append([
-                    pid, ppid, name, path, user, cmdline,
-                    state_val, create_time, exit_time,
+                    pid, ppid, pppid_val, name, parent_name, grandparent_name,
+                    path, user, username, cmdline,
+                    state_val, create_time, exit_time, wow64,
                 ])
             except Exception as exc:
                 logger.warning("Skipping process: %s", exc)

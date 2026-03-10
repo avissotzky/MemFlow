@@ -142,8 +142,7 @@ MemFlow/
 │   ├── unloaded_modules.py  # מודולים שנפרקו (forensic CSV)
 │   ├── findevil.py          # תוצאות FindEvil (forensic CSV)
 │   ├── services.py          # שירותי Windows (forensic CSV)
-│   ├── registry.py          # ציר זמן רגיסטרי (forensic CSV)
-│   └── timelines.py         # כל קבצי timeline_*.csv (forensic CSV)
+│   └── timelines.py         # כל קבצי timeline_*.csv כולל timeline_registry.csv (forensic CSV)
 │
 ├── memflow_common/          # I/O משותף, לוגים, טיפול בטוח ב-CSV
 │   ├── __init__.py
@@ -303,9 +302,9 @@ MemFlow עוקב אחר צינור עיבוד סדרתי קפדני. כל שלב
 
 | שם | מקור | פלט | תיאור |
 |----|------|-----|--------|
-| `processes` | API | `process.csv` | רשימת תהליכים (PID, PPID, שם, נתיב, cmdline, SID, זמנים) |
-| `dlls` | API | `dlls.csv` | DLLs טעונים לכל תהליך (שם מודול, נתיב, בסיס, גודל, כניסה) |
-| `netstat` | VFS | `net.csv` | חיבורי רשת (פרוטוקול, כתובות, פורטים, מצב) |
+| `processes` | API | `process.csv` | רשימת תהליכים (PID, PPID, שם, נתיב, cmdline, SID, username, state, זמנים, wow64) |
+| `dlls` | API | `dlls.csv` | DLLs טעונים לכל תהליך (שם מודול, נתיב, בסיס, גודל, כניסה, is_wow64, module_type, חותמות PE) |
+| `netstat` | VFS | `net.csv` | חיבורי רשת (pid, process_name, פרוטוקול, כתובות, פורטים, מצב) |
 | `modules` | Forensic CSV | `modules.csv` | מודולי kernel כלל-מערכתיים |
 | `handles` | Forensic CSV | `handles.csv` | טבלת handles |
 | `files` | Forensic CSV | `files.csv` | קבצים פתוחים |
@@ -316,8 +315,7 @@ MemFlow עוקב אחר צינור עיבוד סדרתי קפדני. כל שלב
 | `unloaded_modules` | Forensic CSV | `unloaded_modules.csv` | מודולים שנפרקו |
 | `findevil` | Forensic CSV | `findevil.csv` | תוצאות סריקת FindEvil |
 | `services` | Forensic CSV | `services.csv` | שירותי Windows |
-| `registry` | Forensic CSV | `timeline_registry.csv` | ציר זמן רגיסטרי |
-| `timelines` | Forensic CSV | `timeline_*.csv` | כל קבצי ציר הזמן |
+| `timelines` | Forensic CSV | `timeline_*.csv` | כל קבצי ציר הזמן כולל timeline_registry.csv |
 
 #### אסטרטגיות מקור
 

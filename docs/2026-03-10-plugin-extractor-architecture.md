@@ -28,8 +28,7 @@ Replace the monolithic `run_extract.py` (which extracted everything in one scrip
 | `extractors/unloaded_modules.py` | Forensic CSV | Unloaded modules |
 | `extractors/findevil.py` | Forensic CSV | FindEvil scan results |
 | `extractors/services.py` | Forensic CSV | Windows services |
-| `extractors/registry.py` | Forensic CSV | Registry timeline |
-| `extractors/timelines.py` | Forensic CSV | All `timeline_*.csv` files |
+| `extractors/timelines.py` | Forensic CSV | All `timeline_*.csv` files (incl. `timeline_registry.csv`) |
 
 ### Modified files
 
@@ -47,6 +46,10 @@ Three extractor source strategies:
 - **forensic_csv** — copy pre-built CSVs from `/forensic/csv/`
 
 Orchestrator opens VMM once, enables forensic mode if needed, then iterates all discovered plugins.
+
+## Deduplication Note
+
+`registry.py` was removed — it independently copied `timeline_registry.csv`, which `timelines.py` already covers via its `timeline_` prefix match. Running both caused a race-condition duplicate write. Registry data is now exclusively handled by `timelines`.
 
 ## How to add a new ability
 

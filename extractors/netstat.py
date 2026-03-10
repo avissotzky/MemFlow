@@ -19,13 +19,23 @@ class NetstatExtractor(BaseExtractor):
     source = "vfs"
 
     HEADERS = [
-        "pid", "protocol", "state",
+        "pid", "process_name", "protocol", "state",
         "src-addr", "src-port", "dst-addr", "dst-port",
     ]
 
     def extract(self, vmm: Any, out_dir: Path) -> ExtractResult:
         rows: list[list[str]] = []
         try:
+            pid_to_name: dict[str, str] = {}
+            try:
+                for proc in vmm.process_list():
+                    try:
+                        pid_to_name[str(proc.pid)] = proc.name or ""
+                    except Exception:
+                        pass
+            except Exception:
+                pass
+
             text = self.read_vfs_text(vmm, VFS_NETSTAT)
             for line in text.splitlines():
                 line = line.strip()
@@ -40,6 +50,7 @@ class NetstatExtractor(BaseExtractor):
                 remote = parts[2]
                 state = parts[3] if len(parts) > 3 else ""
                 pid = parts[4] if len(parts) > 4 else ""
+                proc_name = pid_to_name.get(pid, "")
 
                 local_parts = local.rsplit(":", 1)
                 remote_parts = remote.rsplit(":", 1)
@@ -48,7 +59,7 @@ class NetstatExtractor(BaseExtractor):
                 dst_addr = remote_parts[0] if remote_parts else ""
                 dst_port = remote_parts[1] if len(remote_parts) > 1 else ""
 
-                rows.append([pid, proto, state, src_addr, src_port, dst_addr, dst_port])
+                rows.append([pid, proc_name, proto, state, src_addr, src_port, dst_addr, dst_port])
         except Exception as exc:
             logger.error("Netstat extraction failed: %s", exc)
             return ExtractResult(ok=False, error=str(exc))

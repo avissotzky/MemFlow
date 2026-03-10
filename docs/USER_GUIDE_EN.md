@@ -142,8 +142,7 @@ MemFlow/
 │   ├── unloaded_modules.py  # Unloaded modules (forensic CSV)
 │   ├── findevil.py          # FindEvil results (forensic CSV)
 │   ├── services.py          # Windows services (forensic CSV)
-│   ├── registry.py          # Registry timeline (forensic CSV)
-│   └── timelines.py         # All timeline_*.csv files (forensic CSV)
+│   └── timelines.py         # All timeline_*.csv files incl. timeline_registry.csv (forensic CSV)
 │
 ├── memflow_common/          # Shared I/O, logging, safe CSV handling
 │   ├── __init__.py
@@ -303,9 +302,9 @@ Every tool follows the same CLI contract for consistency and scriptability.
 
 | Name | Source | Output | Description |
 |------|--------|--------|-------------|
-| `processes` | API | `process.csv` | Process list (PID, PPID, name, path, cmdline, SID, times) |
-| `dlls` | API | `dlls.csv` | Per-process loaded DLLs (module name, path, base, size, entry) |
-| `netstat` | VFS | `net.csv` | Network connections (protocol, addresses, ports, state) |
+| `processes` | API | `process.csv` | Process list (PID, PPID, name, path, cmdline, SID, username, state, times, wow64) |
+| `dlls` | API | `dlls.csv` | Per-process loaded DLLs (module name, path, base, size, entry, is_wow64, module_type, PE timestamps) |
+| `netstat` | VFS | `net.csv` | Network connections (pid, process_name, protocol, addresses, ports, state) |
 | `modules` | Forensic CSV | `modules.csv` | System-wide kernel modules |
 | `handles` | Forensic CSV | `handles.csv` | Handle table |
 | `files` | Forensic CSV | `files.csv` | Open files |
@@ -316,8 +315,7 @@ Every tool follows the same CLI contract for consistency and scriptability.
 | `unloaded_modules` | Forensic CSV | `unloaded_modules.csv` | Unloaded modules |
 | `findevil` | Forensic CSV | `findevil.csv` | FindEvil scan results |
 | `services` | Forensic CSV | `services.csv` | Windows services |
-| `registry` | Forensic CSV | `timeline_registry.csv` | Registry timeline |
-| `timelines` | Forensic CSV | `timeline_*.csv` | All timeline CSVs (all, ntfs, process, thread, etc.) |
+| `timelines` | Forensic CSV | `timeline_*.csv` | All timeline CSVs including timeline_registry.csv |
 
 #### Source Strategies
 

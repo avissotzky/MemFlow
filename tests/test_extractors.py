@@ -187,12 +187,13 @@ class TestDiscovery:
     def test_discovers_all_extractors(self):
         from extractors import discover_extractors
         registry = discover_extractors()
-        assert len(registry) >= 15
+        assert len(registry) >= 14
         assert "processes" in registry
         assert "dlls" in registry
         assert "netstat" in registry
         assert "modules" in registry
         assert "timelines" in registry
+        assert "registry" not in registry
 
     def test_all_have_name_and_source(self):
         from extractors import discover_extractors
@@ -217,8 +218,9 @@ class TestProcessesExtractor:
 
         proc = SimpleNamespace(
             pid=1234, ppid=4, name="test.exe", fullpath=r"C:\test.exe",
-            sid="S-1-5-18", cmdline="test.exe --flag",
-            info={"time-create": "2026-01-01T00:00:00", "time-exit": ""},
+            sid="S-1-5-18", username="SYSTEM", cmdline="test.exe --flag",
+            state=3, time_create="2026-01-01T00:00:00", time_exit="",
+            wow64=False,
         )
         vmm = MagicMock()
         vmm.process_list.return_value = [proc]
@@ -233,11 +235,12 @@ class TestProcessesExtractor:
             reader = csv.reader(f)
             rows = list(reader)
         assert rows[0] == [
-            "pid", "ppid", "name", "path", "user", "cmdline",
-            "state", "create_time", "exit_time",
+            "pid", "ppid", "pppid", "name", "parent_name", "grandparent_name",
+            "path", "user", "username", "cmdline",
+            "state", "create_time", "exit_time", "wow64",
         ]
         assert rows[1][0] == "1234"
-        assert rows[1][2] == "test.exe"
+        assert rows[1][3] == "test.exe"  # name is index 3
 
     def test_handles_broken_process(self, tmp_path: Path):
         from extractors.processes import ProcessesExtractor
@@ -354,16 +357,127 @@ class TestTimelinesExtractor:
         assert "process.csv" not in result.files_written
 
 
-class TestRegistryExtractor:
-    def test_copies_timeline_registry(self, tmp_path: Path):
-        from extractors.registry import RegistryExtractor
+class TestTimelinesCoversRegistry:
+    def test_covers_registry_csv(self, tmp_path: Path):
+        from extractors.timelines import TimelinesExtractor
 
         vmm = _make_vmm_mock(forensic_csvs={
             "timeline_registry.csv": b'"h"\n"r"\n',
+            "timeline_all.csv": b'"h"\n"r"\n',
         })
-        result = RegistryExtractor().extract(vmm, tmp_path)
+        result = TimelinesExtractor().extract(vmm, tmp_path)
         assert result.ok is True
+        assert "timeline_registry.csv" in result.files_written
         assert (tmp_path / "timeline_registry.csv").exists()
+
+
+# ── New field tests ──────────────────────────────────────────
+
+class TestProcessesExtractorFields:
+    def test_state_uses_proc_attribute(self, tmp_path: Path):
+        from extractors.processes import ProcessesExtractor
+
+        proc = SimpleNamespace(
+            pid=1, ppid=0, name="p.exe", fullpath="", sid="", username="",
+            cmdline="", state=5, time_create=None, time_exit=None, wow64=False,
+        )
+        vmm = MagicMock()
+        vmm.process_list.return_value = [proc]
+
+        result = ProcessesExtractor().extract(vmm, tmp_path)
+        assert result.ok is True
+        with (tmp_path / "process.csv").open(encoding="utf-8") as f:
+            rows = list(csv.reader(f))
+        state_idx = rows[0].index("state")
+        assert rows[1][state_idx] == "5"
+
+    def test_username_preferred_over_sid(self, tmp_path: Path):
+        from extractors.processes import ProcessesExtractor
+
+        proc = SimpleNamespace(
+            pid=2, ppid=0, name="p.exe", fullpath="", sid="S-1-5-18",
+            username="NT AUTHORITY\\SYSTEM", cmdline="",
+            state=0, time_create=None, time_exit=None, wow64=False,
+        )
+        vmm = MagicMock()
+        vmm.process_list.return_value = [proc]
+
+        result = ProcessesExtractor().extract(vmm, tmp_path)
+        with (tmp_path / "process.csv").open(encoding="utf-8") as f:
+            rows = list(csv.reader(f))
+        username_idx = rows[0].index("username")
+        assert rows[1][username_idx] == "NT AUTHORITY\\SYSTEM"
+
+    def test_time_direct_attributes(self, tmp_path: Path):
+        from extractors.processes import ProcessesExtractor
+
+        proc = SimpleNamespace(
+            pid=3, ppid=0, name="p.exe", fullpath="", sid="", username="",
+            cmdline="", state=0, time_create="2026-01-01", time_exit="2026-01-02",
+            wow64=True,
+        )
+        vmm = MagicMock()
+        vmm.process_list.return_value = [proc]
+
+        result = ProcessesExtractor().extract(vmm, tmp_path)
+        with (tmp_path / "process.csv").open(encoding="utf-8") as f:
+            rows = list(csv.reader(f))
+        ct_idx = rows[0].index("create_time")
+        wow_idx = rows[0].index("wow64")
+        assert rows[1][ct_idx] == "2026-01-01"
+        assert rows[1][wow_idx] == "True"
+
+
+class TestDllsExtractorFields:
+    def test_pe_fields_captured(self, tmp_path: Path):
+        from extractors.dlls import DllsExtractor
+
+        pe_opt = SimpleNamespace(timedatestamp=12345, checksum=99)
+        pefile = SimpleNamespace(opt=pe_opt)
+        mod = SimpleNamespace(
+            name="evil.dll", fullpath=r"C:\evil.dll",
+            base=0x1000, size=4096, entry=0x1100,
+            is_wow64=True, tp_file=1, pefile=pefile,
+        )
+        proc = MagicMock()
+        proc.pid = 100
+        proc.name = "host.exe"
+        proc.module_list.return_value = [mod]
+
+        vmm = MagicMock()
+        vmm.process_list.return_value = [proc]
+
+        result = DllsExtractor().extract(vmm, tmp_path)
+        assert result.ok is True
+        with (tmp_path / "dlls.csv").open(encoding="utf-8") as f:
+            rows = list(csv.reader(f))
+        h = rows[0]
+        r = rows[1]
+        assert r[h.index("is_wow64")] == "True"
+        assert r[h.index("module_type")] == "1"
+        assert r[h.index("pe_timedatestamp")] == "12345"
+        assert r[h.index("pe_checksum")] == "99"
+
+
+class TestNetstatExtractorFields:
+    def test_process_name_column(self, tmp_path: Path):
+        from extractors.netstat import NetstatExtractor
+
+        netstat_text = textwrap.dedent("""\
+            Proto  Local Address          Foreign Address        State           PID
+            TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       888
+        """)
+        vmm = _make_vmm_mock(vfs_files={"/sys/net/netstat.txt": netstat_text.encode()})
+
+        proc888 = SimpleNamespace(pid=888, name="svchost.exe")
+        vmm.process_list.return_value = [proc888]
+
+        result = NetstatExtractor().extract(vmm, tmp_path)
+        assert result.ok is True
+        with (tmp_path / "net.csv").open(encoding="utf-8") as f:
+            rows = list(csv.reader(f))
+        pn_idx = rows[0].index("process_name")
+        assert rows[1][pn_idx] == "svchost.exe"
 
 
 # ── Orchestrator CLI ────────────────────────────────────────
