@@ -1,0 +1,14 @@
+table: tasks.csv
+columns:
+  GUID: { type: "raw" }  # To be filled later
+  TaskName: { type: "raw" }  # To be filled later
+  TaskPath: { type: "raw" }  # To be filled later
+  User: { type: "raw" }  # To be filled later
+  TimeMostRecent: { type: "raw" }  # To be filled later
+  CommandLine: { type: "raw" }  # To be filled later
+  Parameters: { type: "raw" }  # To be filled later
+  TimeReg: { type: "raw" }  # To be filled later
+  TimeCreate: { type: "raw" }  # To be filled later
+  TimeLastRun: { type: "raw" }  # To be filled later
+  TimeCompleted: { type: "raw" }  # To be filled later
+validations: []

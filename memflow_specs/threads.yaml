@@ -1,0 +1,25 @@
+table: threads.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  TID: { type: "raw" }  # To be filled later
+  ETHREAD: { type: "raw" }  # To be filled later
+  State: { type: "raw" }  # To be filled later
+  WaitReason: { type: "raw" }  # To be filled later
+  CreateTime: { type: "raw" }  # To be filled later
+  ExitTime: { type: "raw" }  # To be filled later
+  Running: { type: "raw" }  # To be filled later
+  BasePriority: { type: "raw" }  # To be filled later
+  Priority: { type: "raw" }  # To be filled later
+  ExitStatus: { type: "raw" }  # To be filled later
+  StartAddress: { type: "raw" }  # To be filled later
+  Win32StartAddress: { type: "raw" }  # To be filled later
+  IP: { type: "raw" }  # To be filled later
+  SP: { type: "raw" }  # To be filled later
+  TEB: { type: "raw" }  # To be filled later
+  StackBaseUser: { type: "raw" }  # To be filled later
+  StackLimitUser: { type: "raw" }  # To be filled later
+  StackBaseKernel: { type: "raw" }  # To be filled later
+  StackLimitKernel: { type: "raw" }  # To be filled later
+  TrapFrame: { type: "raw" }  # To be filled later
+  ImpersonationToken: { type: "raw" }  # To be filled later
+validations: []

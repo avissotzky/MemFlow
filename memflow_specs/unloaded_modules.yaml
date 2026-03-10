@@ -1,0 +1,11 @@
+table: unloaded_modules.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  Process: { type: "raw" }  # To be filled later
+  ModuleName: { type: "raw" }  # To be filled later
+  UnloadTime: { type: "raw" }  # To be filled later
+  Wow64: { type: "raw" }  # To be filled later
+  Size: { type: "raw" }  # To be filled later
+  Start: { type: "raw" }  # To be filled later
+  End: { type: "raw" }  # To be filled later
+validations: []

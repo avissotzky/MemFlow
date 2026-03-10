@@ -1,0 +1,68 @@
+{
+    "_comment": "Network anomaly detection rules for memflow_alerts_network.",
+
+    "browsers": [
+        "chrome.exe",
+        "msedge.exe",
+        "microsoftedge.exe",
+        "microsoftedgecp.exe",
+        "msedgewebview2.exe",
+        "brave.exe",
+        "vivaldi.exe",
+        "opera.exe",
+        "chromium.exe",
+        "arc.exe",
+        "firefox.exe",
+        "waterfox.exe",
+        "seamonkey.exe",
+        "tor.exe",
+        "iexplore.exe",
+        "safari.exe",
+        "browser_broker.exe",
+        "widgets.exe",
+        "searchhost.exe",
+        "searchapp.exe"
+    ],
+
+    "approved_listeners": [
+        "system",
+        "svchost.exe",
+        "services.exe",
+        "lsass.exe",
+        "lsaiso.exe",
+        "wininit.exe",
+        "smss.exe",
+        "spoolsv.exe",
+        "searchindexer.exe",
+        "wmiprvse.exe",
+        "msdtc.exe",
+        "dashost.exe",
+        "msmpeng.exe",
+        "securityhealthservice.exe",
+        "sshd.exe",
+        "dns.exe",
+        "inetinfo.exe",
+        "w3wp.exe",
+        "sqlservr.exe",
+        "httpd.exe",
+        "nginx.exe",
+        "apache.exe"
+    ],
+
+    "suspicious_dns_resolvers": [
+        "powershell.exe",
+        "pwsh.exe",
+        "cmd.exe",
+        "wscript.exe",
+        "cscript.exe",
+        "mshta.exe",
+        "rundll32.exe",
+        "regsvr32.exe",
+        "certutil.exe",
+        "msiexec.exe"
+    ],
+
+    "web_ports": [80, 443],
+
+    "well_known_port_ceiling": 1024
+}

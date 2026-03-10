@@ -1,0 +1,29 @@
+table: yara.csv
+columns:
+  MatchIndex: { type: "raw" }  # To be filled later
+  Tags: { type: "raw" }  # To be filled later
+  Description: { type: "raw" }  # To be filled later
+  RuleAuthor: { type: "raw" }  # To be filled later
+  RuleVersion: { type: "raw" }  # To be filled later
+  MemoryType: { type: "raw" }  # To be filled later
+  MemoryTag: { type: "raw" }  # To be filled later
+  MemoryBaseAddress: { type: "raw" }  # To be filled later
+  ObjectAddress: { type: "raw" }  # To be filled later
+  PID: { type: "raw" }  # To be filled later
+  ProcessName: { type: "raw" }  # To be filled later
+  ProcessPath: { type: "raw" }  # To be filled later
+  CommandLine: { type: "raw" }  # To be filled later
+  User: { type: "raw" }  # To be filled later
+  Created: { type: "raw" }  # To be filled later
+  AddressCount: { type: "raw" }  # To be filled later
+  String0: { type: "raw" }  # To be filled later
+  Address0: { type: "raw" }  # To be filled later
+  String1: { type: "raw" }  # To be filled later
+  Address1: { type: "raw" }  # To be filled later
+  String2: { type: "raw" }  # To be filled later
+  Address2: { type: "raw" }  # To be filled later
+  String3: { type: "raw" }  # To be filled later
+  Address3: { type: "raw" }  # To be filled later
+  String4: { type: "raw" }  # To be filled later
+  Address4: { type: "raw" }  # To be filled later
+validations: []

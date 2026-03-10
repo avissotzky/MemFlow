@@ -1,0 +1,31 @@
+# Large binary / dump files
+*.DMP
+*.dmp
+*.zip
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+*.pyo
+
+# Editor / IDE
+.cursor/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Case data (may contain sensitive forensic artifacts)
+case/
+case_demo/
+
+# MemProcFS extracted output (runtime artifacts)
+MemProcFS_extract/

@@ -1,0 +1,12 @@
+table: handles.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  Handle: { type: "raw" }  # To be filled later
+  Object: { type: "raw" }  # To be filled later
+  Access: { type: "raw" }  # To be filled later
+  Type: { type: "raw" }  # To be filled later
+  Tag: { type: "raw" }  # To be filled later
+  HandleCount: { type: "raw" }  # To be filled later
+  Device: { type: "raw" }  # To be filled later
+  Description: { type: "raw" }  # To be filled later
+validations: []

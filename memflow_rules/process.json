@@ -1,0 +1,118 @@
+{
+    "_comment": "Process anomaly / masquerading detection rules for memflow_alerts_process.",
+
+    "system32_only": [
+        "smss.exe",
+        "csrss.exe",
+        "wininit.exe",
+        "services.exe",
+        "lsass.exe",
+        "lsaiso.exe",
+        "winlogon.exe",
+        "dwm.exe",
+        "fontdrvhost.exe",
+        "svchost.exe",
+        "dllhost.exe",
+        "taskhostw.exe",
+        "conhost.exe",
+        "spoolsv.exe",
+        "runtimebroker.exe",
+        "searchindexer.exe"
+    ],
+
+    "system32_prefixes": [
+        "c:\\windows\\system32",
+        "c:\\windows\\syswow64",
+        "c:\\windows\\winsxs",
+        "\\systemroot\\system32",
+        "\\systemroot\\syswow64",
+        "%systemroot%\\system32",
+        "%systemroot%\\syswow64",
+        "\\??\\c:\\windows\\system32"
+    ],
+
+    "parent_rules": {
+        "smss.exe":          ["system"],
+        "csrss.exe":         ["smss.exe"],
+        "wininit.exe":       ["smss.exe"],
+        "winlogon.exe":      ["smss.exe"],
+        "services.exe":      ["wininit.exe"],
+        "lsass.exe":         ["wininit.exe"],
+        "lsaiso.exe":        ["wininit.exe"],
+        "svchost.exe":       ["services.exe"],
+        "spoolsv.exe":       ["services.exe"],
+        "searchindexer.exe": ["services.exe"],
+        "dllhost.exe":       ["svchost.exe", "services.exe"],
+        "taskhostw.exe":     ["svchost.exe"],
+        "runtimebroker.exe": ["svchost.exe"],
+        "dwm.exe":           ["winlogon.exe"],
+        "fontdrvhost.exe":   ["wininit.exe", "winlogon.exe"]
+    },
+
+    "shell_children": [
+        "cmd.exe",
+        "powershell.exe",
+        "pwsh.exe",
+        "wscript.exe",
+        "cscript.exe",
+        "mshta.exe",
+        "rundll32.exe",
+        "regsvr32.exe",
+        "certutil.exe",
+        "msiexec.exe",
+        "bitsadmin.exe",
+        "forfiles.exe",
+        "pcalua.exe",
+        "bash.exe"
+    ],
+
+    "office_parents": [
+        "winword.exe",
+        "excel.exe",
+        "outlook.exe",
+        "powerpnt.exe",
+        "msaccess.exe",
+        "onenote.exe",
+        "mspub.exe",
+        "visio.exe",
+        "eqnedt32.exe"
+    ],
+
+    "critical_names": [
+        "svchost.exe",
+        "csrss.exe",
+        "lsass.exe",
+        "explorer.exe",
+        "services.exe",
+        "winlogon.exe",
+        "smss.exe",
+        "conhost.exe",
+        "taskhostw.exe",
+        "dllhost.exe",
+        "spoolsv.exe",
+        "wininit.exe",
+        "dwm.exe",
+        "runtimebroker.exe",
+        "fontdrvhost.exe",
+        "searchindexer.exe",
+        "lsaiso.exe"
+    ],
+
+    "system_only_processes": [
+        "smss.exe",
+        "csrss.exe",
+        "wininit.exe",
+        "services.exe",
+        "lsass.exe",
+        "lsaiso.exe",
+        "winlogon.exe"
+    ],
+
+    "system_user_markers": [
+        "system",
+        "nt authority\\system",
+        "nt authority",
+        "local system",
+        "s-1-5-18"
+    ]
+}

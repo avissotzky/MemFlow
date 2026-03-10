@@ -1,0 +1,16 @@
+table: prefetch.csv
+columns:
+  Process: { type: "raw" }  # To be filled later
+  RunCount: { type: "raw" }  # To be filled later
+  FileCount: { type: "raw" }  # To be filled later
+  PrefetchFile: { type: "raw" }  # To be filled later
+  RunTime1: { type: "raw" }  # To be filled later
+  RunTime2: { type: "raw" }  # To be filled later
+  RunTime3: { type: "raw" }  # To be filled later
+  RunTime4: { type: "raw" }  # To be filled later
+  RunTime5: { type: "raw" }  # To be filled later
+  RunTime6: { type: "raw" }  # To be filled later
+  RunTime7: { type: "raw" }  # To be filled later
+  RunTim8: { type: "raw" }  # To be filled later
+  FileObjectAddress: { type: "raw" }  # To be filled later
+validations: []

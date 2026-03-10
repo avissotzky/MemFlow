@@ -1,0 +1,27 @@
+table: modules.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  Process: { type: "raw" }  # To be filled later
+  Name: { type: "raw" }  # To be filled later
+  Wow64: { type: "raw" }  # To be filled later
+  Size: { type: "raw" }  # To be filled later
+  Start: { type: "raw" }  # To be filled later
+  End: { type: "raw" }  # To be filled later
+  "#Imports": { type: "raw" }  # To be filled later
+  "#Exports": { type: "raw" }  # To be filled later
+  "#Sections": { type: "raw" }  # To be filled later
+  Path: { type: "raw" }  # To be filled later
+  KernelPath: { type: "raw" }  # To be filled later
+  VerCompanyName: { type: "raw" }  # To be filled later
+  VerFileDescription: { type: "raw" }  # To be filled later
+  VerFileVersion: { type: "raw" }  # To be filled later
+  VerInternalName: { type: "raw" }  # To be filled later
+  VerLegalCopyright: { type: "raw" }  # To be filled later
+  VerOriginalFilename: { type: "raw" }  # To be filled later
+  VerProductName: { type: "raw" }  # To be filled later
+  VerProductVersion: { type: "raw" }  # To be filled later
+  PdbPath: { type: "raw" }  # To be filled later
+  PdbAge: { type: "raw" }  # To be filled later
+  PdbHexGUID: { type: "raw" }  # To be filled later
+  PdbSymbolServer: { type: "raw" }  # To be filled later
+validations: []

@@ -1,0 +1,8 @@
+table: findevil.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  ProcessName: { type: "raw" }  # To be filled later
+  Type: { type: "raw" }  # To be filled later
+  Address: { type: "raw" }  # To be filled later
+  Description: { type: "raw" }  # To be filled later
+validations: []

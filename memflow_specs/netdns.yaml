@@ -1,0 +1,9 @@
+table: netdns.csv
+columns:
+  Address: { type: "raw" }  # To be filled later
+  Type: { type: "raw" }  # To be filled later
+  Flags: { type: "raw" }  # To be filled later
+  TTL: { type: "raw" }  # To be filled later
+  Name: { type: "raw" }  # To be filled later
+  Data: { type: "raw" }  # To be filled later
+validations: []

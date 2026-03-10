@@ -1,0 +1,11 @@
+table: drivers.csv
+columns:
+  Name: { type: "raw" }  # To be filled later
+  ObjectAddress: { type: "raw" }  # To be filled later
+  Size: { type: "raw" }  # To be filled later
+  Start: { type: "raw" }  # To be filled later
+  End: { type: "raw" }  # To be filled later
+  ServiceKey: { type: "raw" }  # To be filled later
+  DriverName: { type: "raw" }  # To be filled later
+  DriverPath: { type: "raw" }  # To be filled later
+validations: []

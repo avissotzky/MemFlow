@@ -1,0 +1,64 @@
+{
+    "_comment": "Process injection / rootkit detection rules for memflow_alerts_injection.",
+
+    "rwx_patterns": [
+        "\\bRWX\\b",
+        "PAGE_EXECUTE_READWRITE",
+        "EXECUTE_READWRITE",
+        "\\b-rwx\\b",
+        "\\bERWX?\\b"
+    ],
+
+    "unbacked_sentinels": [
+        "",
+        "-",
+        "n/a",
+        "none",
+        "unknown",
+        "private",
+        "pagefile-backed",
+        "pagefile"
+    ],
+
+    "hollowing_targets": [
+        "smss.exe",
+        "csrss.exe",
+        "wininit.exe",
+        "services.exe",
+        "lsass.exe",
+        "lsaiso.exe",
+        "winlogon.exe",
+        "explorer.exe",
+        "dwm.exe",
+        "svchost.exe",
+        "dllhost.exe",
+        "taskhost.exe",
+        "taskhostw.exe",
+        "conhost.exe",
+        "spoolsv.exe",
+        "runtimebroker.exe",
+        "searchindexer.exe",
+        "fontdrvhost.exe"
+    ],
+
+    "expected_paths": {
+        "smss.exe":          "c:\\windows\\system32\\smss.exe",
+        "csrss.exe":         "c:\\windows\\system32\\csrss.exe",
+        "wininit.exe":       "c:\\windows\\system32\\wininit.exe",
+        "services.exe":      "c:\\windows\\system32\\services.exe",
+        "lsass.exe":         "c:\\windows\\system32\\lsass.exe",
+        "lsaiso.exe":        "c:\\windows\\system32\\lsaiso.exe",
+        "winlogon.exe":      "c:\\windows\\system32\\winlogon.exe",
+        "explorer.exe":      "c:\\windows\\explorer.exe",
+        "dwm.exe":           "c:\\windows\\system32\\dwm.exe",
+        "svchost.exe":       "c:\\windows\\system32\\svchost.exe",
+        "dllhost.exe":       "c:\\windows\\system32\\dllhost.exe",
+        "taskhost.exe":      "c:\\windows\\system32\\taskhost.exe",
+        "taskhostw.exe":     "c:\\windows\\system32\\taskhostw.exe",
+        "conhost.exe":       "c:\\windows\\system32\\conhost.exe",
+        "spoolsv.exe":       "c:\\windows\\system32\\spoolsv.exe",
+        "runtimebroker.exe": "c:\\windows\\system32\\runtimebroker.exe",
+        "searchindexer.exe": "c:\\windows\\system32\\searchindexer.exe",
+        "fontdrvhost.exe":   "c:\\windows\\system32\\fontdrvhost.exe"
+    }
+}

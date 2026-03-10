@@ -1,0 +1,22 @@
+table: process.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  PPID: { type: "raw" }  # To be filled later
+  State: { type: "raw" }  # To be filled later
+  ShortName: { type: "raw" }  # To be filled later
+  Name: { type: "raw" }  # To be filled later
+  IntegrityLevel: { type: "raw" }  # To be filled later
+  User: { type: "raw" }  # To be filled later
+  CreateTime: { type: "raw" }  # To be filled later
+  ExitTime: { type: "raw" }  # To be filled later
+  Wow64: { type: "raw" }  # To be filled later
+  EPROCESS: { type: "raw" }  # To be filled later
+  PEB: { type: "raw" }  # To be filled later
+  PEB32: { type: "raw" }  # To be filled later
+  DTB: { type: "raw" }  # To be filled later
+  UserDTB: { type: "raw" }  # To be filled later
+  UserPath: { type: "raw" }  # To be filled later
+  KernelPath: { type: "raw" }  # To be filled later
+  CommandLine: { type: "raw" }  # To be filled later
+  Flag: { type: "raw" }  # To be filled later
+validations: []

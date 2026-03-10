@@ -1,0 +1,14 @@
+table: net.csv
+columns:
+  Proto: { type: "raw" }  # To be filled later
+  State: { type: "raw" }  # To be filled later
+  SrcAddr: { type: "raw" }  # To be filled later
+  SrcPort: { type: "raw" }  # To be filled later
+  DstAddr: { type: "raw" }  # To be filled later
+  DstPort: { type: "raw" }  # To be filled later
+  Time: { type: "raw" }  # To be filled later
+  Object: { type: "raw" }  # To be filled later
+  PID: { type: "raw" }  # To be filled later
+  Process: { type: "raw" }  # To be filled later
+  ProcessPath: { type: "raw" }  # To be filled later
+validations: []

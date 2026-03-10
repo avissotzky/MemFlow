@@ -1,0 +1,82 @@
+{
+    "_comment": "Persistence mechanism detection rules for memflow_alerts_persistence. All regex patterns are compiled with re.IGNORECASE at load time.",
+
+    "run_key_patterns": [
+        "\\\\Run\\\\",
+        "\\\\RunOnce\\\\",
+        "\\\\Run$",
+        "\\\\RunOnce$",
+        "\\\\RunServices\\\\",
+        "\\\\RunServicesOnce\\\\",
+        "\\\\Policies\\\\Explorer\\\\Run",
+        "\\\\Winlogon\\\\\\\\Shell$",
+        "\\\\Winlogon\\\\\\\\Userinit$",
+        "\\\\Explorer\\\\Run\\\\",
+        "\\\\Explorer\\\\Run$"
+    ],
+
+    "suspicious_run_paths": [
+        "%temp%",
+        "%appdata%",
+        "%localappdata%",
+        "%userprofile%",
+        "\\appdata\\",
+        "\\temp\\",
+        "\\tmp\\",
+        "\\users\\",
+        "\\downloads\\",
+        "\\desktop\\",
+        "\\documents\\",
+        "\\public\\",
+        "\\programdata\\",
+        "\\perflogs\\",
+        "\\windows\\temp\\",
+        "%windir%\\temp",
+        "\\recycler\\",
+        "$recycle.bin",
+        "\\intel\\"
+    ],
+
+    "service_suspicious": [
+        "powershell",
+        "pwsh",
+        "cmd.exe",
+        "cmd /",
+        "mshta",
+        "wscript",
+        "cscript",
+        "rundll32",
+        "regsvr32",
+        "certutil",
+        "bitsadmin",
+        "msiexec",
+        "bash.exe",
+        "wsl.exe",
+        "pcalua",
+        "forfiles",
+        "sc \\\\"
+    ],
+
+    "task_suspicious_patterns": [
+        "cmd\\s*/c",
+        "cmd\\.exe\\s*/c",
+        "powershell.*-w\\s*hidden",
+        "powershell.*-windowstyle\\s*hidden",
+        "powershell.*-enc\\b",
+        "powershell.*-encodedcommand\\b",
+        "powershell.*-nop\\b",
+        "powershell.*-ep\\s*bypass\\b",
+        "powershell.*downloadstring",
+        "powershell.*invoke-expression",
+        "powershell.*\\biex\\b",
+        "pwsh.*-w\\s*hidden",
+        "pwsh.*-enc\\b",
+        "mshta\\b",
+        "wscript\\b",
+        "cscript\\b",
+        "certutil.*-urlcache",
+        "bitsadmin.*transfer",
+        "regsvr32.*/s.*/i:http",
+        "rundll32.*javascript"
+    ]
+}

@@ -1,0 +1,11 @@
+table: devices.csv
+columns:
+  Name: { type: "raw" }  # To be filled later
+  ObjectAddress: { type: "raw" }  # To be filled later
+  Depth: { type: "raw" }  # To be filled later
+  AttachedDeviceAddress: { type: "raw" }  # To be filled later
+  DriverName: { type: "raw" }  # To be filled later
+  DriverPath: { type: "raw" }  # To be filled later
+  DriverObjectAddress: { type: "raw" }  # To be filled later
+  ExtraInfo: { type: "raw" }  # To be filled later
+validations: []

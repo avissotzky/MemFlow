@@ -1,0 +1,15 @@
+table: services.csv
+columns:
+  PID: { type: "raw" }  # To be filled later
+  Ordinal: { type: "raw" }  # To be filled later
+  ServiceName: { type: "raw" }  # To be filled later
+  DisplayName: { type: "raw" }  # To be filled later
+  User: { type: "raw" }  # To be filled later
+  StartType: { type: "raw" }  # To be filled later
+  State: { type: "raw" }  # To be filled later
+  Type1: { type: "raw" }  # To be filled later
+  Type2: { type: "raw" }  # To be filled later
+  ObjectAddress: { type: "raw" }  # To be filled later
+  ImagePath: { type: "raw" }  # To be filled later
+  DriverpathOrCmdline: { type: "raw" }  # To be filled later
+validations: []

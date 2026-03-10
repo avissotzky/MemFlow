@@ -1,0 +1,11 @@
+table: timeline_net.csv
+columns:
+  Time: { type: "raw" }  # To be filled later
+  Type: { type: "raw" }  # To be filled later
+  Action: { type: "raw" }  # To be filled later
+  PID: { type: "raw" }  # To be filled later
+  Value32: { type: "raw" }  # To be filled later
+  Value64: { type: "raw" }  # To be filled later
+  Text: { type: "raw" }  # To be filled later
+  Pad: { type: "raw" }  # To be filled later
+validations: []

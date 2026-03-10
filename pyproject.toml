@@ -1,0 +1,104 @@
+# ──────────────────────────────────────────────────────────────
+# MemFlow – Offline Forensic Correlation Engine
+# "CSV is the Source of Truth."
+# ──────────────────────────────────────────────────────────────
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# ── Project metadata ────────────────────────────────────────
+[project]
+name = "memflow"
+version = "0.6.0"
+description = "Offline Forensic Correlation Engine – ingest, normalise, and analyse MemProcFS CSV output."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Proprietary"}
+keywords = ["forensics", "memory", "memprocfs", "csv", "dfir"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "License :: Other/Proprietary License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+]
+
+dependencies = [
+    "memprocfs>=4.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.4,<9",
+    "pytest-cov>=4.1,<6",
+]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+
+# ── Console-script entry points ─────────────────────────────
+# Each tool in tools/ exposes a `main()` function.
+# After `pip install .` every command below is available on PATH.
+[project.scripts]
+memflow-ingest              = "tools.memflow_ingest:main"
+memflow-inventory           = "tools.memflow_inventory:main"
+memflow-parse-generic       = "tools.memflow_parse_generic:main"
+memflow-validate            = "tools.memflow_validate:main"
+memflow-spec-scaffold       = "tools.memflow_spec_scaffold:main"
+memflow-entropy             = "tools.memflow_entropy:main"
+memflow-alerts-injection    = "tools.memflow_alerts_injection:main"
+memflow-alerts-lateral      = "tools.memflow_alerts_lateral:main"
+memflow-alerts-network      = "tools.memflow_alerts_network:main"
+memflow-alerts-persistence  = "tools.memflow_alerts_persistence:main"
+memflow-alerts-process      = "tools.memflow_alerts_process:main"
+memflow-extract             = "run_extract:main"
+
+# ── Package discovery ───────────────────────────────────────
+[tool.setuptools.packages.find]
+include = [
+    "memflow_common",
+    "memflow_common.*",
+    "memflow_parser",
+    "memflow_parser.*",
+    "memflow_rules",
+    "memflow_rules.*",
+    "memflow_specs",
+    "memflow_specs.*",
+    "extractors",
+    "extractors.*",
+    "tools",
+    "tools.*",
+]
+exclude = [
+    "tests",
+    "tests.*",
+    "docs",
+    "venv",
+    "venv.*",
+]
+
+# Include YAML spec files shipped inside memflow_specs/
+[tool.setuptools.package-data]
+memflow_specs = ["*.yaml", "*.yml"]
+memflow_rules = ["*.json"]
+
+# ── Tool configuration (optional, for future use) ──────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true

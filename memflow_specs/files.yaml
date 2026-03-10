@@ -1,0 +1,9 @@
+table: files.csv
+columns:
+  Object: { type: "raw" }  # To be filled later
+  Type: { type: "raw" }  # To be filled later
+  SignInfo: { type: "raw" }  # To be filled later
+  Size: { type: "raw" }  # To be filled later
+  File: { type: "raw" }  # To be filled later
+  Path: { type: "raw" }  # To be filled later
+validations: []

@@ -1,0 +1,15 @@
+# MemFlow – Python dependencies
+# Core: Python 3.10+ standard library only (csv, hashlib, pathlib, etc.)
+# No external database packages.
+
+# --- Forensic Engine ---
+memprocfs>=4.0
+
+# --- Testing ---
+pytest>=7.4,<9
+pytest-cov>=4.1,<6
+
+# --- Development ---
+# (uncomment as needed)
+# ruff>=0.4
+# mypy>=1.10
