@@ -113,6 +113,29 @@ The orchestrator picks it up automatically on the next run.
 | `docs/` | Architecture & contract documentation |
 | `tests/` | Unit and integration tests |
 
+## Extractor Field Reference
+
+See **[docs/10_extractor_field_reference.md](docs/10_extractor_field_reference.md)** for a complete description of every field in every extractor output.
+
+Quick summary:
+
+| Extractor | Output file | Key fields |
+|-----------|-------------|------------|
+| `processes` | `process.csv` | `pid`, `ppid`, `pppid`, `name`, `parent_name`, `grandparent_name`, `path`, `user`, `username`, `cmdline`, `state`, `create_time`, `exit_time`, `wow64` |
+| `netstat` | `net.csv` | `pid`, `process_name`, `protocol`, `state`, `src-addr`, `src-port`, `dst-addr`, `dst-port` |
+| `dlls` | `dlls.csv` | `pid`, `process_name`, `module_name`, `module_path`, `base_address`, `size`, `entry_point`, `is_wow64`, `module_type`, `pe_timedatestamp`, `pe_checksum` |
+| `modules` | `modules.csv` | `pid`, `name`, `path`, `base`, `size`, `entry`, `checksum`, `timedatestamp` |
+| `threads` | `threads.csv` | `pid`, `tid`, `state`, `wait_reason`, `priority`, `start_address`, `ethread`, `teb`, `suspend_count`, `create_time` |
+| `services` | `services.csv` | `pid`, `state`, `start_type`, `binary_path`, `service_name`, `display_name`, `run_as` |
+| `findevil` | `findevil.csv` | `pid`, `name`, `type`, `description`, `detail`, `address` |
+| `drivers` | `drivers.csv` | `offset`, `base`, `size`, `path`, `name`, `service_name` |
+| `handles` | `handles.csv` | `pid`, `process`, `handle`, `access`, `type`, `detail` |
+| `tasks` | `tasks.csv` | `name`, `path`, `command`, `arguments`, `trigger` |
+| `files` | `files.csv` | `pid`, `process`, `address`, `type`, `file` |
+| `devices` | `devices.csv` | `offset`, `major_function_table`, `driver_path`, `device_name`, `device_type` |
+| `unloaded_modules` | `unloaded_modules.csv` | `pid`, `name`, `path`, `base`, `size` |
+| `timelines` | `timeline_*.csv` | `time`, `type`, `action`, `pid`, `path`, `description` |
+
 ## CLI Contract
 
 Every tool accepts the same standard arguments:
